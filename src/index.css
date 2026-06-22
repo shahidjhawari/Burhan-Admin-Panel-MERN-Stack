@@ -341,6 +341,73 @@ tbody tr:last-child td {
   white-space: nowrap;
 }
 
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  flex-shrink: 0;
+}
+
+.avatar-fallback {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-track {
+  width: 140px;
+  height: 8px;
+  background: var(--paper);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.progress-fill.complete {
+  background: var(--success);
+}
+
+.progress-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progress-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.progress-label.complete {
+  color: var(--success);
+  font-weight: 600;
+}
+
 .row-actions {
   display: flex;
   gap: 4px;
@@ -594,3 +661,88 @@ tbody tr:last-child td {
     padding: 20px;
   }
 }
+
+/* ── Evidence sections (Scientific Proofs / Ahadees) ── */
+.modal-lg { width: 700px; }
+
+.evidence-section {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px;
+  background: #fafbfd;
+}
+
+.evidence-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ev-label { font-weight: 700; font-size: 13px; }
+
+.ev-add-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.ev-empty { color: var(--text-muted); font-size: 13px; margin: 4px 0 0; }
+
+.ev-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-top: 8px;
+  position: relative;
+}
+
+.ev-item .input, .ev-item .textarea { flex: 1; }
+
+.ev-type-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: var(--accent-soft);
+  color: #c8431f;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ev-remove {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  cursor: pointer;
+  margin-top: 1px;
+}
+
+.ev-remove:hover { background: var(--danger-soft); color: var(--danger); }
+
+.ev-file-row { display: flex; align-items: center; gap: 12px; flex: 1; flex-wrap: wrap; }
+
+.ev-thumb {
+  width: 56px; height: 56px; object-fit: cover;
+  border-radius: 8px; border: 1px solid var(--line);
+}
+
+.ev-pdf-chip {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--danger-soft); color: var(--danger);
+  padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 600;
+}
+
+/* YouTube row */
+.yt-row {
+  display: flex; align-items: center; gap: 8px; margin-top: 8px;
+}
+.yt-row .input { flex: 1; }
