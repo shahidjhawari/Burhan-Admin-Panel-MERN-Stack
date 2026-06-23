@@ -2,6 +2,14 @@ import React, { useState } from "react";
 import QuestionList from "./components/QuestionList.jsx";
 import UserList from "./components/UserList.jsx";
 import NotificationPanel from "./components/NotificationPanel.jsx";
+import LivePanel from "./components/LivePanel.jsx";
+
+const tabs = [
+  { id: "questions",     label: "📋 Questions" },
+  { id: "users",        label: "👥 Users" },
+  { id: "notifications",label: "🔔 Notifications" },
+  { id: "live",         label: "🔴 Live" },
+];
 
 export default function App() {
   const [view, setView] = useState("questions");
@@ -14,25 +22,22 @@ export default function App() {
           QA Admin
         </div>
         <nav className="sidebar-nav">
-          <button className={`sidebar-link ${view === "questions" ? "active" : ""}`}
-            onClick={() => setView("questions")}>
-            📋 Questions
-          </button>
-          <button className={`sidebar-link ${view === "users" ? "active" : ""}`}
-            onClick={() => setView("users")}>
-            👥 Users
-          </button>
-          <button className={`sidebar-link ${view === "notifications" ? "active" : ""}`}
-            onClick={() => setView("notifications")}>
-            🔔 Notifications
-          </button>
+          {tabs.map(t => (
+            <button
+              key={t.id}
+              className={`sidebar-link ${view === t.id ? "active" : ""}`}
+              onClick={() => setView(t.id)}
+            >
+              {t.label}
+            </button>
+          ))}
         </nav>
       </aside>
-
       <main className="main">
-        {view === "questions" && <QuestionList />}
-        {view === "users" && <UserList />}
-        {view === "notifications" && <NotificationPanel />}
+        {view === "questions"      && <QuestionList />}
+        {view === "users"          && <UserList />}
+        {view === "notifications"  && <NotificationPanel />}
+        {view === "live"           && <LivePanel />}
       </main>
     </div>
   );
