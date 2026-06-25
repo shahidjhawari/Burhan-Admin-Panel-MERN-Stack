@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import QuestionList from "./components/QuestionList.jsx";
 import UserList from "./components/UserList.jsx";
 import NotificationPanel from "./components/NotificationPanel.jsx";
-import LivePanel from "./components/LivePanel.jsx";
 
 const tabs = [
-  { id: "questions",     label: "📋 Questions" },
-  { id: "users",        label: "👥 Users" },
-  { id: "notifications",label: "🔔 Notifications" },
-  { id: "live",         label: "🔴 Live" },
+  { id: "questions",      label: "📋 Questions" },
+  { id: "users",         label: "👥 Users" },
+  { id: "notifications", label: "🔔 Notifications" },
 ];
 
 export default function App() {
@@ -22,7 +20,7 @@ export default function App() {
           QA Admin
         </div>
         <nav className="sidebar-nav">
-          {tabs.map(t => (
+          {tabs.map((t) => (
             <button
               key={t.id}
               className={`sidebar-link ${view === t.id ? "active" : ""}`}
@@ -37,7 +35,6 @@ export default function App() {
         {view === "questions"      && <QuestionList />}
         {view === "users"          && <UserList />}
         {view === "notifications"  && <NotificationPanel />}
-        {view === "live"           && <LivePanel />}
       </main>
     </div>
   );
