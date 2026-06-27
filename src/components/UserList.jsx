@@ -98,6 +98,7 @@ export default function UserList() {
               <thead>
                 <tr>
                   <th>User</th>
+                  <th style={{ width: 160 }}>XP / Level / Title</th>
                   <th>Joined</th>
                   <th style={{ width: 220 }}>Reading progress</th>
                   <th style={{ width: 80 }}></th>
@@ -118,8 +119,27 @@ export default function UserList() {
                           <div>
                             <div className="q-text">{user.name}</div>
                             <div style={{ fontSize: 12, color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                              {user._id}
+                              {user.email}
                             </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                            <span style={{
+                              background: "var(--ink)", color: "#fff",
+                              fontSize: 10, fontWeight: 700, padding: "2px 7px",
+                              borderRadius: 5, fontFamily: "var(--font-mono)"
+                            }}>
+                              L{user.level || 1}
+                            </span>
+                            <span style={{ fontWeight: 700, fontSize: 13 }}>
+                              {(user.xp || 0).toLocaleString()} XP
+                            </span>
+                          </div>
+                          <div style={{ fontSize: 11, color: "var(--text-muted)" }}>
+                            {user.title || "طالبِ علم"}
                           </div>
                         </div>
                       </td>
@@ -137,7 +157,7 @@ export default function UserList() {
                           <span className={`progress-label ${isComplete ? "complete" : ""}`}>
                             {isComplete
                               ? "100% completed 🎉"
-                              : `${user.readCount} of ${user.totalQuestions} (${user.percentage}%)`}
+                              : `${user.completedCount || user.readCount || 0} of ${user.totalQuestions} (${user.percentage}%)`}
                           </span>
                         </div>
                       </td>
