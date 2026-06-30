@@ -164,6 +164,10 @@ export default function QuestionForm({ existing, onClose, onSaved }) {
 
   const [question,    setQuestion]    = useState(existing?.question || "");
   const [answer,      setAnswer]      = useState(existing?.answer || "");
+  const [richText,    setRichText]    = useState(existing?.richText || "");
+  const [notes,       setNotes]       = useState(existing?.notes || "");
+  const [references,  setReferences]  = useState(existing?.references || []);
+  const [quotes,      setQuotes]      = useState(existing?.quotes || []);
   const [category,    setCategory]    = useState(existing?.category || "General");
   const [language,    setLanguage]    = useState(existing?.language || "en");
   const [tags,        setTags]        = useState(existing?.tags || []);
@@ -227,6 +231,10 @@ export default function QuestionForm({ existing, onClose, onSaved }) {
     const fd = new FormData();
     fd.append("question",  question);
     fd.append("answer",    answer);
+    fd.append("richText",  richText);
+    fd.append("notes",     notes);
+    fd.append("references",JSON.stringify(references.filter(Boolean)));
+    fd.append("quotes",    JSON.stringify(quotes.filter((q) => q.text)));
     fd.append("category",  category);
     fd.append("language",  language);
     fd.append("tags",      JSON.stringify(tags));
@@ -278,9 +286,65 @@ export default function QuestionForm({ existing, onClose, onSaved }) {
               onChange={(e) => setQuestion(e.target.value)} placeholder="Islamic sawaal likhein…" required />
           </div>
           <div className="field">
-            <label>Answer</label>
+            <label>Answer <span style={{color:"var(--text-muted)",fontWeight:400}}>(short summary — shown in list)</span></label>
             <textarea className="textarea" rows={5} value={answer}
               onChange={(e) => setAnswer(e.target.value)} placeholder="Jawab likhein…" required />
+          </div>
+
+          {/* Rich Text — long form explanation */}
+          <div className="field">
+            <label>
+              Rich Text <span style={{color:"var(--text-muted)",fontWeight:400}}>(optional — full detailed explanation, supports HTML)</span>
+            </label>
+            <textarea className="textarea" rows={10} value={richText}
+              onChange={(e) => setRichText(e.target.value)}
+              placeholder="Tafseel se jawab likhein. HTML formatting use kar sakte hain: <b>bold</b>, <i>italic</i>, <br> line break, <ul><li>list</li></ul>"
+            />
+            <div className="helper-text">{richText.length} characters</div>
+          </div>
+
+          {/* References */}
+          <div className="field">
+            <label>References <span style={{color:"var(--text-muted)",fontWeight:400}}>(sources, books, hadith collections)</span></label>
+            {references.map((ref, i) => (
+              <div key={i} style={{display:"flex",gap:8,marginBottom:8}}>
+                <input className="input" value={ref}
+                  onChange={(e) => setReferences((p) => p.map((r,j)=>j===i?e.target.value:r))}
+                  placeholder="Sahih Bukhari, Hadith 1082" />
+                <button type="button" className="ev-remove" onClick={() => setReferences((p)=>p.filter((_,j)=>j!==i))}>✕</button>
+              </div>
+            ))}
+            <button type="button" className="btn btn-ghost btn-sm" onClick={() => setReferences((p)=>[...p,""])}>+ Reference add karein</button>
+          </div>
+
+          {/* Quotes */}
+          <div className="field">
+            <label>Quotes / Sayings</label>
+            {quotes.map((q, i) => (
+              <div key={i} style={{border:"1px solid var(--line)",borderRadius:9,padding:12,marginBottom:8}}>
+                <div className="field">
+                  <label style={{fontSize:11}}>Quote text</label>
+                  <textarea className="textarea" rows={2} value={q.text||""}
+                    onChange={(e)=>setQuotes((p)=>p.map((qq,j)=>j===i?{...qq,text:e.target.value}:qq))}
+                    placeholder="Hadith ya qawl…" />
+                </div>
+                <div style={{display:"flex",gap:8,alignItems:"center"}}>
+                  <input className="input" value={q.source||""}
+                    onChange={(e)=>setQuotes((p)=>p.map((qq,j)=>j===i?{...qq,source:e.target.value}:qq))}
+                    placeholder="Maakhaz / Source (e.g. Bukhari)" />
+                  <button type="button" className="ev-remove" onClick={() => setQuotes((p)=>p.filter((_,j)=>j!==i))}>✕</button>
+                </div>
+              </div>
+            ))}
+            <button type="button" className="btn btn-ghost btn-sm" onClick={() => setQuotes((p)=>[...p,{text:"",source:""}])}>+ Quote add karein</button>
+          </div>
+
+          {/* Notes */}
+          <div className="field">
+            <label>Notes <span style={{color:"var(--text-muted)",fontWeight:400}}>(admin notes, footnotes, context)</span></label>
+            <textarea className="textarea" rows={3} value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Koi zaroori maloomat ya hawashi…" />
           </div>
 
           {/* Category + Language + Image */}
